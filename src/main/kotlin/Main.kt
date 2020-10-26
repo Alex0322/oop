@@ -1,7 +1,7 @@
 import ru.netology.domain.Post
 
 class WallService {
-    // id поста предоставляет WallService, равным индексу поста в массиве + 1
+    // id поста предоставляет WallService, равным индексу поста в массиве +  1
     // при условии, что мы можем только добавлять и изменять элементы все id будут уникальны
     // это корректное решение
     private val posts: ArrayList<Post> = arrayListOf()
