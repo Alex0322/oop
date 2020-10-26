@@ -1,4 +1,4 @@
-import ru.netology.domain.Post
+mport ru.netology.domain.Post
 
 class WallService {
     // id поста предоставляет WallService, равным индексу поста в массиве +  1
