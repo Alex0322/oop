@@ -1,7 +1,13 @@
 import ru.netology.domain.Post
 
+fun main(){
+    // nullable значения есть, выводятся, как null, учтено в тестах, вывод стандартным образом
+    // так понял задачу, что возможность нулевых значений нигде не учитывается
+    println(WallService().add(Post(replyOwnerId = null)).printAll())
+}
+
 class WallService {
-    // id поста предоставляет WallService, равным индексу поста в массиве +  1
+    // id поста предоставляет WallService, равным индексу поста в массиве + 1
     // при условии, что мы можем только добавлять и изменять элементы все id будут уникальны
     // это корректное решение
     private val posts: ArrayList<Post> = arrayListOf()
