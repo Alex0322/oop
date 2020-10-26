@@ -21,6 +21,30 @@ data class Post(
 ) {
     var id: Long = 0
 
+    private var attachments = emptyArray<Attachment>()
+
+    fun addAttachment(a: Attachment): Attachment {
+        a.id = attachments.size.toInt() + 1
+        attachments += a
+        return attachments.last()
+    }
+
+    //вывести инфу по всем вложениям
+    fun printAttachmentsInfo() {
+        for (a in attachments) {
+            //общая инфа по вложению
+            print("AttachmentId=${a.id} ")
+            //специфичная инфа по вложению
+            when (a) {
+                is PhotoAttachment -> println("Photo:orientation=${a.photo.orientation}")
+                is AudioAttachment -> println("Audio:artist=${a.audio.artist}")
+                is VideoAttachment -> println("Video:lengthSecs=${a.video.lengthSecs}")
+                is DocAttachment -> println("Doc:author=${a.doc.author}")
+                is GoodAttachment -> println("Good:count=${a.good.count}")
+            }
+        }
+    }
+
     val comments = Comments()
     val likes = Likes()
     val reposts = Reposts()
