@@ -1,10 +1,30 @@
-import ru.netology.domain.Post
-
 import org.junit.Test
-
 import org.junit.Assert.*
+import ru.netology.domain.*
 
 class WallServiceTest {
+
+    @Test
+    fun post_Attachments() {
+        val at4Photo = PhotoAttachment(Photo(orientation = 1))
+        val at4Audio = AudioAttachment(Audio(name = "Name1", artist = "Artist1"))
+        val at4Video = VideoAttachment(Video(lengthSecs = 10_000))
+        val at4Doc = DocAttachment(Doc(author = "Author1"))
+        val at4Good = GoodAttachment(Good(name = "Good1", count = 5))
+
+        val ws = WallService()
+        val post = Post(ownerId = 1, fromId = 3)
+
+        post.addAttachment(at4Photo)
+        post.addAttachment(at4Audio)
+        post.addAttachment(at4Video)
+        post.addAttachment(at4Doc)
+        post.addAttachment(at4Good)
+
+        ws.add(post)
+
+        post.printAttachmentsInfo()
+    }
 
     @Test
     fun post_Funcs() {

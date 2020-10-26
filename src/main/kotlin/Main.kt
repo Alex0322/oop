@@ -1,9 +1,32 @@
-import ru.netology.domain.Post
+import ru.netology.domain.*
 
 fun main(){
     // nullable значения есть, выводятся, как null, учтено в тестах, вывод стандартным образом
     // так понял задачу, что возможность нулевых значений нигде не учитывается
     println(WallService().add(Post(replyOwnerId = null)).printAll())
+
+    // вывод инфы по вложениям поста (использование абстрактного класса и SmartCast)
+    // используется и в тестах
+    println()
+    println("--- POST ATTACHMENTS ---")
+    println()
+
+    val at4Photo = PhotoAttachment(Photo(orientation = 1))
+    val at4Audio = AudioAttachment(Audio(name = "Name1", artist = "Artist1"))
+    val at4Video = VideoAttachment(Video(lengthSecs = 10_000))
+    val at4Doc = DocAttachment(Doc(author = "Author1"))
+    val at4Good = GoodAttachment(Good(name = "Good1", count = 5))
+
+    val ws = WallService()
+    val post = Post(ownerId = 1, fromId = 3)
+
+    post.addAttachment(at4Photo)
+    post.addAttachment(at4Audio)
+    post.addAttachment(at4Video)
+    post.addAttachment(at4Doc)
+    post.addAttachment(at4Good)
+
+    post.printAttachmentsInfo()
 }
 
 class WallService {
