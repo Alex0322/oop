@@ -1,54 +1,67 @@
 package ru.netology.domain
 
 abstract class Attachment(
+    open val type: String = ""
+) {}
+
+data class Photo(
     var id: Int = 0,
     val album_id: Int = 0,
     val owner_id: Int = 0,
     val user_id: Int = 0
-) {
-    //- class Attachment: открытое свойство a_type в базовом классе
-    abstract val a_type: Int
+) {}
 
-}
+data class PhotoAttachment(
+    override val type: String = "photo",
+    val photo: Photo = Photo()
+) : Attachment() {} // рискну предположить, что круглые скобки, всё-таки, нужны, иначе - не компилируется
 
-//- перечисление AttachTypes с типами вложений
-enum class AttachTypes() {
-    PHOTO, AUDIO, VIDEO, DOC, GOOD
-}
+data class Audio(
+    var id: Int = 0,
+    val album_id: Int = 0,
+    val owner_id: Int = 0,
+    val user_id: Int = 0
+) {}
 
-class Photo(val orientation: Int = 0) {}
 
-class PhotoAttachment(val photo: Photo) : Attachment() {
-    //- абстрактное свойство a_type переопределяется потомками
-    override val a_type: Int
-        get() = AttachTypes.PHOTO.ordinal
-}
+data class AudioAttachment(
+    override val type: String = "audio",
+    val audio: Audio = Audio()
+) : Attachment() {}
 
-class Audio(val name: String = "", val artist: String = "") {}
+data class Video(
+    var id: Int = 0,
+    val album_id: Int = 0,
+    val owner_id: Int = 0,
+    val user_id: Int = 0
+) {}
 
-class AudioAttachment(val audio: Audio) : Attachment() {
-    override val a_type: Int
-        get() = AttachTypes.AUDIO.ordinal
-}
+data class VideoAttachment(
+    override val type: String = "video",
+    val video: Video = Video()
+) : Attachment() {}
 
-class Video(val lengthSecs: Int = 0) {}
+data class Doc(
+    var id: Int = 0,
+    val album_id: Int = 0,
+    val owner_id: Int = 0,
+    val user_id: Int = 0
+) {}
 
-class VideoAttachment(val video: Video) : Attachment() {
-    override val a_type: Int
-        get() = AttachTypes.VIDEO.ordinal
-}
+data class DocAttachment(
+    override val type: String = "doc",
+    val doc: Doc = Doc()
+) : Attachment() {}
 
-class Doc(val author: String = "") {}
+data class Good(
+    var id: Int = 0,
+    val album_id: Int = 0,
+    val owner_id: Int = 0,
+    val user_id: Int = 0
+) {}
 
-class DocAttachment(val doc: Doc) : Attachment() {
-    override val a_type: Int
-        get() = AttachTypes.DOC.ordinal
-}
-
-class Good(val name: String = "", val count: Int = 0) {}
-
-class GoodAttachment(val good: Good) : Attachment() {
-    override val a_type: Int
-        get() = AttachTypes.GOOD.ordinal
-}
+data class GoodAttachment(
+    override val type: String = "good",
+    val good: Good = Good()
+) : Attachment() {}
 

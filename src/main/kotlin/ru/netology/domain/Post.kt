@@ -20,33 +20,31 @@ data class Post(
     val postponedId: Long = 0
 ) {
     var id: Long = 0
+    var attachmentId: Int = 0
 
-    //- массив attachments может содержать null элементы
     private var attachments = emptyArray<Attachment?>()
 
-    //- addAttachment(): может принимать null-вложение и добавлять его в массив
     fun addAttachment(a: Attachment?): Attachment? {
         if (a != null)
-            a.id = attachments.size + 1
+//            a.id = attachmentId++
+// поскольку из абстрактного Attachment поле id убрано, чтобы его установить
+// в наследниках мы должны выполнять SmartCast для каждого типа
+            when (a) {
+                is PhotoAttachment -> a.photo.id = attachmentId
+                is AudioAttachment -> a.audio.id = attachmentId
+                is VideoAttachment -> a.video.id = attachmentId
+                is DocAttachment -> a.doc.id = attachmentId
+                is GoodAttachment -> a.good.id = attachmentId
+            }
         attachments += a
+        attachmentId++
         return attachments.last()
     }
 
-    //- printAttachmentsInfo(): выводит инфу по вложениям, пропуская пустые
-    //вывести инфу по всем вложениям
     fun printAttachmentsInfo() {
         for (a in attachments) {
             if (a != null) {
-                //общая инфа по вложению
-                print("AttachmentId=${a.id} AttachmentType=${a.a_type} ")
-                //специфичная инфа по вложению
-                when (a) {
-                    is PhotoAttachment -> println("Photo:orientation=${a.photo.orientation}")
-                    is AudioAttachment -> println("Audio:artist=${a.audio.artist}")
-                    is VideoAttachment -> println("Video:lengthSecs=${a.video.lengthSecs}")
-                    is DocAttachment -> println("Doc:author=${a.doc.author}")
-                    is GoodAttachment -> println("Good:count=${a.good.count}")
-                }
+                print("AttachmentType=${a.type} ")
             }
         }
     }
@@ -61,7 +59,6 @@ data class Post(
     }
 
     fun copy(id: Long = this.id, date: Long = this.date, ownerId: Long = this.ownerId): Post {
-        // в однострочном виде функцию записать не полчается, т.к. нужно и вернуть Post и установить id
         val p = Post(date = date, ownerId = ownerId)
         p.id = id
         return p

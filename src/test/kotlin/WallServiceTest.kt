@@ -6,18 +6,16 @@ class WallServiceTest {
 
     @Test
     fun post_Attachments() {
-        val a_types: AttachTypes
-        val at4Photo = PhotoAttachment(Photo(orientation = 1))
-        val at4Audio = AudioAttachment(Audio(name = "Name1", artist = "Artist1"))
-        val at4Video = VideoAttachment(Video(lengthSecs = 10_000))
-        val at4Doc = DocAttachment(Doc(author = "Author1"))
-        val at4Good = GoodAttachment(Good(name = "Good1", count = 5))
+        val at4Photo = PhotoAttachment(photo=Photo())
+        val at4Audio = AudioAttachment(audio=Audio())
+        val at4Video = VideoAttachment(video=Video())
+        val at4Doc = DocAttachment(doc=Doc())
+        val at4Good = GoodAttachment(good=Good())
 
         val ws = WallService()
         val post = Post(ownerId = 1, fromId = 3)
 
         post.addAttachment(at4Photo)
-        //- post_Attachments(): тест нулевого вложения
         post.addAttachment(null)
         post.addAttachment(at4Audio)
         post.addAttachment(at4Video)
@@ -27,6 +25,7 @@ class WallServiceTest {
         ws.add(post)
 
         post.printAttachmentsInfo()
+        assert(true)
     }
 
     @Test
@@ -34,6 +33,7 @@ class WallServiceTest {
         assertTrue(Post().copy() != null)
         assertTrue(Post().printAll() != "")
         main()
+        assert(true)
     }
 
     @Test
