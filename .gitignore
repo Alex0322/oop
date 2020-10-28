@@ -1,4 +1,5 @@
 # Project exclude paths
 /.gradle/
 /build/
+#- из контроля версий исключена папка .idea
 /.idea/

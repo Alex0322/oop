@@ -21,26 +21,32 @@ data class Post(
 ) {
     var id: Long = 0
 
-    private var attachments = emptyArray<Attachment>()
+    //- массив attachments может содержать null элементы
+    private var attachments = emptyArray<Attachment?>()
 
-    fun addAttachment(a: Attachment): Attachment {
-        a.id = attachments.size.toInt() + 1
+    //- addAttachment(): может принимать null-вложение и добавлять его в массив
+    fun addAttachment(a: Attachment?): Attachment? {
+        if (a != null)
+            a.id = attachments.size + 1
         attachments += a
         return attachments.last()
     }
 
+    //- printAttachmentsInfo(): выводит инфу по вложениям, пропуская пустые
     //вывести инфу по всем вложениям
     fun printAttachmentsInfo() {
         for (a in attachments) {
-            //общая инфа по вложению
-            print("AttachmentId=${a.id} ")
-            //специфичная инфа по вложению
-            when (a) {
-                is PhotoAttachment -> println("Photo:orientation=${a.photo.orientation}")
-                is AudioAttachment -> println("Audio:artist=${a.audio.artist}")
-                is VideoAttachment -> println("Video:lengthSecs=${a.video.lengthSecs}")
-                is DocAttachment -> println("Doc:author=${a.doc.author}")
-                is GoodAttachment -> println("Good:count=${a.good.count}")
+            if (a != null) {
+                //общая инфа по вложению
+                print("AttachmentId=${a.id} AttachmentType=${a.a_type} ")
+                //специфичная инфа по вложению
+                when (a) {
+                    is PhotoAttachment -> println("Photo:orientation=${a.photo.orientation}")
+                    is AudioAttachment -> println("Audio:artist=${a.audio.artist}")
+                    is VideoAttachment -> println("Video:lengthSecs=${a.video.lengthSecs}")
+                    is DocAttachment -> println("Doc:author=${a.doc.author}")
+                    is GoodAttachment -> println("Good:count=${a.good.count}")
+                }
             }
         }
     }

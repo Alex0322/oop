@@ -6,6 +6,7 @@ class WallServiceTest {
 
     @Test
     fun post_Attachments() {
+        val a_types: AttachTypes
         val at4Photo = PhotoAttachment(Photo(orientation = 1))
         val at4Audio = AudioAttachment(Audio(name = "Name1", artist = "Artist1"))
         val at4Video = VideoAttachment(Video(lengthSecs = 10_000))
@@ -16,6 +17,8 @@ class WallServiceTest {
         val post = Post(ownerId = 1, fromId = 3)
 
         post.addAttachment(at4Photo)
+        //- post_Attachments(): тест нулевого вложения
+        post.addAttachment(null)
         post.addAttachment(at4Audio)
         post.addAttachment(at4Video)
         post.addAttachment(at4Doc)
@@ -27,9 +30,10 @@ class WallServiceTest {
     }
 
     @Test
-    fun post_Funcs() {
+    fun post_Misc() {
         assertTrue(Post().copy() != null)
         assertTrue(Post().printAll() != "")
+        main()
     }
 
     @Test

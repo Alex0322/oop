@@ -17,7 +17,6 @@ fun main(){
     val at4Doc = DocAttachment(Doc(author = "Author1"))
     val at4Good = GoodAttachment(Good(name = "Good1", count = 5))
 
-    val ws = WallService()
     val post = Post(ownerId = 1, fromId = 3)
 
     post.addAttachment(at4Photo)
